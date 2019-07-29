@@ -1,45 +1,33 @@
 <template>
- <b-jumbotron>
-    <div v-html="currentQuestion.question">
-      
-    </div>
+  <b-jumbotron>
+    <div v-html="currentQuestion.question"></div>
 
-    <hr class="my-4">
+    <hr class="my-4" />
 
     <b-list-group>
       <b-list-group-item
-      @click="selectAnswer(index)"
-      v-for="(answer, index) in shuffledAnswers"
-      :key="index"
-      :class="[!answered && selectedIndex === index ? 'selected' : 
+        @click="selectAnswer(index)"
+        v-for="(answer, index) in shuffledAnswers"
+        :key="index"
+        :class="[!answered && selectedIndex === index ? 'selected' : 
       answered && correctIndex === index ? 'correct' :
       answered && selectedIndex === index ? 'incorrect' : '']"
-      >
-      {{ answer }}
-      </b-list-group-item>
+      >{{ answer }}</b-list-group-item>
     </b-list-group>
 
     <b-button
-    variant="primary"
-    @click="submitAnswer()"
-    :disabled="selectedIndex === null || answered"
-    href="#">
-      Submit
-    </b-button>
+      variant="primary"
+      @click="submitAnswer()"
+      :disabled="selectedIndex === null || answered"
+      href="#"
+    >Submit</b-button>
 
-    <b-button 
-    @click="next" 
-    variant="success" 
-    href="#">
-      Next
-    </b-button>
-
+    <b-button @click="next" variant="success" href="#">Next</b-button>
   </b-jumbotron>
 </template>
 
 <script>
-
-import _ from 'lodash';
+import _ from "lodash";
 
 export default {
   props: {
@@ -53,7 +41,7 @@ export default {
       shuffledAnswers: [],
       correctIndex: null,
       answered: false
-    }
+    };
   },
   computed: {
     answers() {
@@ -77,9 +65,14 @@ export default {
       this.selectedIndex = index;
     },
     shuffleAnswers() {
-      let answers = [...this.currentQuestion.incorrect_answers, this.currentQuestion.correct_answer];
+      let answers = [
+        ...this.currentQuestion.incorrect_answers,
+        this.currentQuestion.correct_answer
+      ];
       this.shuffledAnswers = _.shuffle(answers);
-      this.correctIndex = this.shuffledAnswers.indexOf(this.currentQuestion.correct_answer);
+      this.correctIndex = this.shuffledAnswers.indexOf(
+        this.currentQuestion.correct_answer
+      );
     },
     submitAnswer() {
       let isCorrect = false;
@@ -93,34 +86,34 @@ export default {
       this.increment(isCorrect);
     }
   }
-}
+};
 </script>
 
 <style scoped>
-  .list-group {
-    padding-bottom: 2em;
-  }
+.list-group {
+  padding-bottom: 2em;
+}
 
-  .list-group-item:hover {
-    background-color: cyan;
-    cursor: pointer;
-  }
+.list-group-item:hover {
+  background-color: cyan;
+  cursor: pointer;
+}
 
-  .btn {
-    margin-right: 1em;
-  }
+.btn {
+  margin-right: 1em;
+}
 
-  .selected {
-    background-color: cadetblue;
-  }
+.selected {
+  background-color: cadetblue;
+}
 
-  .correct {
-    background-color: green;
-  }
+.correct {
+  background-color: green;
+}
 
-  .incorrect {
-    background-color: red;
-  }
+.incorrect {
+  background-color: red;
+}
 </style>
 
 
